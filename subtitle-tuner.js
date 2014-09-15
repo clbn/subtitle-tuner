@@ -7,6 +7,10 @@ var dirName = '.';
 
 var timestampPattern = /(\d\d):(\d\d):(\d\d)[,\.](\d\d\d)/gi;
 
+// Slope (a) and intercept (b) of linear function (ax+b)
+var a = 0.95767;
+var b = 350;
+
 var readSrtDir = function() {
   fs.readdir(dirName, function(err, files) {
     if (err) {
@@ -45,7 +49,7 @@ var parseSrtFile = function(fileName, data) {
     timestampPattern,
     function(timestamp, p1, p2, p3, p4) {
       var milliseconds = convertTimestampToMilliseconds(p1, p2, p3, p4);
-      milliseconds = updateTime(milliseconds, 1 / 1.0442, 350);
+      milliseconds = updateTime(milliseconds, a, b);
       return convertMillisecondsToTimestamp(milliseconds);
     }
   );
